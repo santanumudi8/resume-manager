@@ -8,6 +8,8 @@ import com.example.model.AddResumeModel;
 
 public interface ResumeService {
 
-	String addResume(Long personId, String companyName, MultipartFile resumeFile) throws IOException;
+	String addResume(Long personId, String companyName, MultipartFile resumeFile) throws IOException, Exception;
+
+	byte[] getResume(Long resumeId);
 
 }

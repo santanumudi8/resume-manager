@@ -24,15 +24,26 @@ public class ResumeServiceImpl implements ResumeService{
 	private PersonRepository personRepository;
 
 	@Override
-	public String addResume(Long personId, String companyName, MultipartFile resumeFile) throws IOException {
+	public String addResume(Long personId, String companyName, MultipartFile resumeFile) throws Exception {
 		Resume resume = new Resume();
-		Optional<Person> personDetails = personRepository.findById(personId);
+		Optional<Person> personDetailsOptional = personRepository.findById(personId);
+		if(!personDetailsOptional.isPresent()) {
+			throw new Exception("Please provide some valid person Id !!");
+		}
+		resume.setPersonId(personId);
 		resume.setCompanyName(companyName);
-		resume.setPerson(personDetails.get());
 		resume.setResumeDoc(resumeFile.getBytes());
 		resumeRepository.save(resume);
 		String response = "Resume Details Added Successfully!!";
 		return response;
+	}
+
+	@Override
+	public byte[] getResume(Long resumeId) {
+		Optional<Resume> resumeDetails = resumeRepository.findById(resumeId);
+		byte[] resumeDoc = resumeDetails.get().getResumeDoc();
+		return resumeDoc;
+		
 	}
 
 }

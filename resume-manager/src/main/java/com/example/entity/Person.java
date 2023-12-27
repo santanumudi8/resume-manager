@@ -1,8 +1,10 @@
 package com.example.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -25,9 +27,6 @@ public class Person implements Serializable{
 	
 	@Column(name = "NAME")
 	private String name;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
-	private List<Resume> resumes;
 
 	public Long getId() {
 		return id;
@@ -45,12 +44,4 @@ public class Person implements Serializable{
 		this.name = name;
 	}
 
-	public List<Resume> getResumes() {
-		return resumes;
-	}
-
-	public void setResumes(List<Resume> resumes) {
-		this.resumes = resumes;
-	}
-	
 }
